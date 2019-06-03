@@ -1,7 +1,7 @@
 Ansible Role: Lynis
 =========
 
-[![Build Status](https://travis-ci.org/tommarshall/ansible-role-lynis.svg?branch=master)](https://travis-ci.org/tommarshall/ansible-role-lynis)
+[![Build Status](https://travis-ci.org/Blue-Bag/ansible-role-lynis.svg?branch=master)](https://travis-ci.org/Blue-Bag/ansible-role-lynis)
 
 Installs the [Lynis](https://cisofy.com/lynis/) security auditing tool on RHEL/CentOS or Debian/Ubuntu servers.
 
