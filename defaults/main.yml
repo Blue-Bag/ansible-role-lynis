@@ -1,8 +1,8 @@
 ---
 # defaults file for lynis
 
-lynis_version: 2.5.8
-lynis_version_sha256sum: cb18e95e83c414ab36b125c9aa97c9a79b10a7cba2e94e622242611af5042ffb
+lynis_version: 2.7.4
+lynis_version_sha256sum: a3f615793ff80733bae15584893a4086101d891c61c3a52d280dfb658cb98fbd
 
 lynis_src_directory: /usr/local/src
 
@@ -14,3 +14,7 @@ lynis_cron: yes
 lynis_cron_weekday: "*"
 lynis_cron_hour: 3
 lynis_cron_minute: 30
+
+# create a local config override
+lynis_custom_cfg: yes
+lynis_custom_cfg_path: 'templates/custom.prf.j2'
