@@ -14,3 +14,7 @@ lynis_cron: yes
 lynis_cron_weekday: "*"
 lynis_cron_hour: 3
 lynis_cron_minute: 30
+
+# create a local config override
+lynis_custom_cfg: yes
+lynis_custom_cfg_path: 'templates/custom.prf.j2'
