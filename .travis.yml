@@ -23,8 +23,11 @@ script:
   - "ansible-playbook -vv -i tests/inventory tests/$SITE --connection=local --become"
 
   # Run the role/playbook again, checking to make sure it's idempotent.
-  - "ansible-playbook -vv -i tests/inventory tests/$SITE --connection=local --become"
-
+  - >
+    ansible-playbook -i tests/inventory tests/$SITE --connection=local --become
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
   # Check to make sure the Lynis runs.
   - cd /opt/lynis && sudo ./lynis audit system --auditor "test" --cronjob
