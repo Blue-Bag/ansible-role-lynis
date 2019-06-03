@@ -42,6 +42,16 @@ lynis_cron_minute: 30
 ```
 Lynis cron job configuration. The report, report log, and report data are all written to the `lynis_log_directory`.
 
+Custom Configuration
+```yml
+lynis_custom_cfg: yes
+lynis_custom_cfg_path: 'templates/custom.prf.j2'
+```
+This enables you to overide the default configuration.
+the out of the box config overides the certficate path for checkingcertificates.
+This stops Lynis reporting on archived certificates for LetsEncrypt.
+Youcan reference you own custom file if you have additional config to override.
+
 Dependencies
 ------------
 
