@@ -18,3 +18,18 @@ lynis_cron_minute: '30'
 # create a local config override
 lynis_custom_cfg: yes
 lynis_custom_cfg_path: 'templates/custom.prf.j2'
+
+lynis_cert_search_paths:
+   - '/etc/apache2'
+   - '/etc/dovecot'
+   - '/etc/httpd'
+   - '/etc/letsencrypt/live'
+   - '/etc/pki'
+   - '/etc/postfix'
+   - '/etc/ssl'
+   - '/opt/psa/var/certificates'
+   - '/usr/local/psa/var/certificates'
+   - '/usr/local/share/ca-certificates'
+   - '/var/www'
+   - '/srv/www'
+   - '/etc/haproxy/ssl'
