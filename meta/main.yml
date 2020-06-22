@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  author: tommarshall
+  author: George Boobyer (forked from tommarshall)
   description: Lynis is a security auditing tool for Unix and Linux based systems.
   company:
   license: "license (BSD, MIT)"
@@ -18,6 +18,6 @@ galaxy_info:
   - name: Debian
     versions:
     - all
-  categories:
+  galaxy_tags:
     - security
     - monitoring
