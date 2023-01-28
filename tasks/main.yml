@@ -1,36 +1,16 @@
 ---
-# tasks file for lynis
 
-- name: Download Lynis.
-  get_url:
-    url: "https://cisofy.com/files/lynis-{{ lynis_version }}.tar.gz"
-    dest: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}.tar.gz"
-    sha256sum: "{{ lynis_version_sha256sum }}"
-  become: yes
+- name: Lynis | Install Lynis (Debian | Ubuntu)
+  include_tasks: package.yml
+  when:
+      (lynis_use_packages is defined and lynis_use_packages)
+  tags: lynis
 
-- name: Ensure Lynis src directory exists.
-  file:
-    path: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}"
-    state: directory
-  become: yes
 
-- name: Extract Lynis.
-  unarchive:
-    src: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}.tar.gz"
-    dest: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}"
-    creates: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}/lynis"
-    copy: no
-  become: yes
-
-- name: Copy Lynis to dest directory.
-  shell: >
-    rsync --delete -ri --links --exclude="plugins/*" --exclude="custom.prf"
-    {{ lynis_src_directory }}/lynis-{{ lynis_version }}/lynis/
-    {{ lynis_dest_directory }}/lynis
-    | awk '{print $1}' | grep -vE '..\.\..\.\.\.\.' | wc -l
-  become: yes
-  register: lynis_rsync
-  changed_when: lynis_rsync.stdout|int != 0
+- name: Lynis | Install Lynis manually (OS-independent)
+  include_tasks: manual-install.yml
+  when: lynis_use_packages is defined and not lynis_use_packages
+  tags: lynis
 
 - name: Ensure Lynis log directory exists (when lynis_cron).
   file:
@@ -52,10 +32,16 @@
   become: yes
   when: lynis_cron | bool
 
+- name: Ensure Lynis cfg directory exists.
+  file:
+    path: "{{ lynis_cfg_directory }}"
+    state: directory
+  become: yes
+
 - name: Configure custom configuration
   template:
     src: "{{ lynis_custom_cfg_path }}"
-    dest: "{{ lynis_dest_directory }}/lynis/custom.prf"
+    dest: "{{ lynis_cfg_directory }}/custom.prf"
     backup: no
   become: true
   when: lynis_custom_cfg | bool

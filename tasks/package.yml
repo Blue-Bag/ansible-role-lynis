@@ -1,0 +1,12 @@
+---
+
+- name: Lynis | Install Lynis from package
+  ansible.builtin.package:
+    name: lynis
+    state: present
+  register: lynis_isinstalled
+  tags: lynis    
+
+- name: Set fact for destination config dir
+  set_fact:
+    lynis_cfg_directory: "/etc/lynis"

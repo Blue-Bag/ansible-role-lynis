@@ -14,7 +14,7 @@ Role Variables
 --------------
 
 ```yml
-lynis_version: 2.7.4
+lynis_version: 2.7.5
 lynis_version_sha256sum: a3f615793ff80733bae15584893a4086101d891c61c3a52d280dfb658cb98fbd
 ```
 The version and corresponding `sha256sum` of Lynis to install. Latest version and hash can be found on the [Lynis download page](https://cisofy.com/download/lynis/).
@@ -63,7 +63,7 @@ Example Playbook
 ```yml
 - hosts: all
   roles:
-     - { role: tommarshall.lynis, tags: [lynis] }
+     - { role: ansible-role-lynis, tags: [lynis] }
 ```
 
 License
