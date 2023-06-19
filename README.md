@@ -5,6 +5,8 @@ Ansible Role: Lynis
 
 Installs the [Lynis](https://cisofy.com/lynis/) security auditing tool on RHEL/CentOS or Debian/Ubuntu servers.
 
+Updated to add the Cisofy repo as package soure as the APT packages are too out of date.
+
 Requirements
 ------------
 
@@ -14,8 +16,8 @@ Role Variables
 --------------
 
 ```yml
-lynis_version: 2.7.5
-lynis_version_sha256sum: a3f615793ff80733bae15584893a4086101d891c61c3a52d280dfb658cb98fbd
+lynis_version: 3.0.8
+lynis_version_sha256sum: 98373a4cc9d0471ab9bebb249e442fcf94b6bf6d4e9c6fc0b22bca1506646c63
 ```
 The version and corresponding `sha256sum` of Lynis to install. Latest version and hash can be found on the [Lynis download page](https://cisofy.com/download/lynis/).
 
