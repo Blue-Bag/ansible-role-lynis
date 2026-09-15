@@ -1,0 +1,40 @@
+---
+
+- name: Lynis | Debian | install support for APT thru HTTPS
+  ansible.builtin.package:
+    name: apt-transport-https
+    state: present
+
+- name: Add an Apt signing key, uses whichever key is at the URL
+  ansible.builtin.get_url:
+    url: https://packages.cisofy.com/keys/cisofy-software-public.key
+    dest: /etc/apt/trusted.gpg.d/cisofy.asc
+    mode: "0644"
+
+
+# - name: Lynis | Debian | disable languages
+#   ansible.builtin.copy: 
+#     content: 'Acquire::Languages "none";'
+#     dest: "/etc/apt/apt.conf.d/99disable-translations"   
+#     owner: root
+#     group: root
+#     mode: 0644     
+
+- name: Lynis | Debian | add lynis official repo
+  ansible.builtin.copy:
+    content: "deb https://packages.cisofy.com/community/lynis/deb/ stable main"
+    dest: "/etc/apt/sources.list.d/cisofy-lynis.list"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Lynis | Install Lynis from package
+  ansible.builtin.package:
+    name: lynis
+    state: present
+  register: lynis_isinstalled
+  tags: lynis    
+
+- name: Set fact for destination config dir
+  set_fact:
+    lynis_cfg_directory: "/etc/lynis"

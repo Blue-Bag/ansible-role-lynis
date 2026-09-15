@@ -1,0 +1,38 @@
+---
+
+# tasks file for lynis
+
+- name: Download Lynis.
+  get_url:
+    url: "https://cisofy.com/files/lynis-{{ lynis_version }}.tar.gz"
+    dest: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}.tar.gz"
+    sha256sum: "{{ lynis_version_sha256sum }}"
+  become: yes
+
+- name: Ensure Lynis src directory exists.
+  file:
+    path: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}"
+    state: directory
+  become: yes
+
+- name: Extract Lynis.
+  unarchive:
+    src: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}.tar.gz"
+    dest: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}"
+    creates: "{{ lynis_src_directory }}/lynis-{{ lynis_version }}/lynis"
+    copy: no
+  become: yes
+
+- name: Copy Lynis to dest directory.
+  shell: >
+    rsync --delete -ri --links --exclude="plugins/*" --exclude="custom.prf"
+    {{ lynis_src_directory }}/lynis-{{ lynis_version }}/lynis/
+    {{ lynis_dest_directory }}/lynis
+    | awk '{print $1}' | grep -vE '..\.\..\.\.\.\.' | wc -l
+  become: yes
+  register: lynis_rsync
+  changed_when: lynis_rsync.stdout|int != 0
+
+- name: Set fact for destination config dir
+  set_fact:
+    lynis_cfg_directory: "{{ lynis_dest_directory }}/lynis"
