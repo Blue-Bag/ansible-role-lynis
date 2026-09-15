@@ -6,9 +6,10 @@
     state: present
 
 - name: Add an Apt signing key, uses whichever key is at the URL
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://packages.cisofy.com/keys/cisofy-software-public.key
-    state: present
+    dest: /etc/apt/trusted.gpg.d/cisofy.asc
+    mode: "0644"
 
 
 # - name: Lynis | Debian | disable languages
